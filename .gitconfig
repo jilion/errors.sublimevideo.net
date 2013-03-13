@@ -1,0 +1,30 @@
+[user]
+  name  = YOUR NAME
+  email = YOUR EMAIL
+
+
+[core]
+  repositoryformatversion = 0
+  filemode                = true
+  bare                    = false
+  logallrefupdates        = true
+  ignorecase              = true
+
+
+[remote "origin"]
+  url   = git@github.com:jilion/errors.sublimevideo.net.git
+  fetch = +refs/heads/*:refs/remotes/origin/*
+
+[remote "production"]
+  url   = git@heroku.com:sv-errors.git
+  fetch = +refs/heads/*:refs/remotes/production/*
+  push  = master:master
+
+
+[branch "master"]
+  remote = origin
+  merge  = refs/heads/master
+
+
+[heroku]
+  remote = production # change this to production if you know what you're doing

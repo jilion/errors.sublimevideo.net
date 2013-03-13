@@ -1,0 +1,11 @@
+log
+tmp
+vendor/ruby
+vendor/bundler
+!Guardfile
+!Gemfile
+!Gemfile.lock
+!.bundle
+!.bundle/*
+node_modules
+.env

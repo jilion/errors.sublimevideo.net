@@ -1,0 +1,6 @@
+# Variables
+TM_ORGANIZATION_NAME = 'Jilion SA'
+
+# Settings
+projectDirectory = "$CWD"
+exclude          = "{$exclude,db/backups,public/uploads,run,script,config.sqlite}"
