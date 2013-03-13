@@ -1,5 +1,3 @@
-class SublimeVideoPlayerException < Exception; end
-
 class ErrorReporter
   attr_reader :request, :params
 
@@ -12,7 +10,7 @@ class ErrorReporter
   end
 
   def report
-    Airbrake.notify_or_ignore(SublimeVideoPlayerException.new(params['message']), _options)
+    Airbrake.notify_or_ignore(_options)
     _increment_metrics
   end
 
@@ -20,6 +18,8 @@ class ErrorReporter
 
   def _options
     {
+      error_class: "#{params['message']}/#{params['file']}:#{params['lineno']}",
+      error_message: params['message'],
       parameters: params.merge(user_agent: request.user_agent),
       backtrace:  params['stack']
     }
