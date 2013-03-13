@@ -16,10 +16,3 @@ RSpec.configure do |config|
   config.fail_fast = ENV['FAST_FAIL'] != 'false'
   config.order = 'random'
 end
-
-require 'redis'
-RSpec.configure do |config|
-  config.before :each do
-    Sidekiq.redis { |con| con.flushall }
-  end
-end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'rack/test'
 APP = Rack::Builder.parse_file('config.ru').first
-require 'sidekiq/testing'
 
 describe Application do
   include Rack::Test::Methods
@@ -68,10 +67,6 @@ describe Application do
       end
       before { post '/report', MultiJson.dump(error_data) }
 
-      it 'do not delay exception notification to AirbrakeDeliveryWorker' do
-        Sidekiq::Worker.jobs.should be_empty
-      end
-
       it 'responds with 400' do
         last_response.status.should eq 400
         MultiJson.load(last_response.body).should eq({ 'message' => 'Parameters must include a "message" key' })
@@ -88,11 +83,6 @@ describe Application do
         }
       end
       before { post '/report', MultiJson.dump(error_data) }
-
-      it 'delays exception notification to AirbrakeDeliveryWorker' do
-        Sidekiq::Worker.jobs.should have(1).job
-        Sidekiq::Worker.jobs.to_s.should match /AirbrakeDeliveryWorker/
-      end
 
       it 'responds with 200' do
         last_response.status.should eq 200

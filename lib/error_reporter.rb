@@ -1,5 +1,3 @@
-require 'workers/airbrake_delivery_worker'
-
 class ErrorReporter
   attr_reader :request, :params
 

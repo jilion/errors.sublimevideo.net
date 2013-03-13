@@ -10,8 +10,6 @@ gem 'rack-timeout'
 
 gem 'yajl-ruby', require: 'yajl' # fast json
 
-gem 'sidekiq'
-
 # https://github.com/adamlwatson/goliath/blob/master/examples/newrelic_stats/newrelic_stats.rb
 gem 'newrelic_rpm'
 gem 'airbrake'
