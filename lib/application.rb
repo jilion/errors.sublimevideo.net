@@ -2,7 +2,7 @@ require 'error_reporter'
 
 class Application
   def call(env)
-    return [404, {}, { message: 'Not found' }] unless env['PATH_INFO'] == '/report'
+    return [404, {}, { message: 'Not found' }] unless env['PATH_INFO'] =~ %r{/report(\.json)?}
 
     error_reporter = ErrorReporter.new(env)
 
