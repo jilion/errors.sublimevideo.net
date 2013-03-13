@@ -57,19 +57,43 @@ describe Application do
       last_response.headers['Content-Type'].should eq 'application/json'
     end
 
-    context 'without message' do
-      let(:error_data) do
-        {
-          file: 'player.js',
-          lineno: 42,
-          stack: []
-        }
-      end
+    context 'without message, file and lineno' do
+      let(:error_data) { { stack: [] } }
       before { post '/report', MultiJson.dump(error_data) }
 
       it 'responds with 400' do
         last_response.status.should eq 400
-        MultiJson.load(last_response.body).should eq({ 'message' => 'Parameters must include a "message" key' })
+        MultiJson.load(last_response.body).should eq({ 'message' => 'Parameters must include a "message" key, or both "file" and "lineno" keys' })
+      end
+    end
+
+    context 'without message and file' do
+      let(:error_data) { { lineno: 42, stack: [] } }
+      before { post '/report', MultiJson.dump(error_data) }
+
+      it 'responds with 400' do
+        last_response.status.should eq 400
+        MultiJson.load(last_response.body).should eq({ 'message' => 'Parameters must include a "message" key, or both "file" and "lineno" keys' })
+      end
+    end
+
+    context 'with message only' do
+      let(:error_data) { { message: 'Undefined method "play"!' } }
+      before { post '/report', MultiJson.dump(error_data) }
+
+      it 'responds with 200' do
+        last_response.status.should eq 200
+        MultiJson.load(last_response.body).should eq({ 'message' => 'OK' })
+      end
+    end
+
+    context 'with file and lineno only' do
+      let(:error_data) { { file: 'player.js', lineno: 42 } }
+      before { post '/report', MultiJson.dump(error_data) }
+
+      it 'responds with 200' do
+        last_response.status.should eq 200
+        MultiJson.load(last_response.body).should eq({ 'message' => 'OK' })
       end
     end
 

@@ -27,15 +27,7 @@ CORS Ajax requests are always sent to the same url via POST HTTP(S):
 
 `POST //errors.sublimevideo.net/report`
 
-The params (json) sent *must at least* include a `message` key.
+The params (json) sent *must at least* include a `message` key or both `file` and `lineno` keys.
+The params (json) can contain a `stack` key that will be used by Airbrake for better displaying.
 
-Allowed parameters:
-
-``` ruby
-'message' => The error message.
-'stack'   => The stack traces. Must be an array of strings.
-'file'    => The file from which the JS error originated.
-'lineno'  => The line number from which the JS error originated.
-```
-
-The server will reply [200, "{ message: 'OK' }"] if the exception is valid.
+The server replies [200, "{ message: 'OK' }"] if the exception is valid.

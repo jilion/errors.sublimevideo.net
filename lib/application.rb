@@ -10,7 +10,7 @@ class Application
       error_reporter.report
       [200, {}, { message: 'OK' }]
     else
-      [400, {}, { message: 'Parameters must include a "message" key' }]
+      [400, {}, { message: 'Parameters must include a "message" key, or both "file" and "lineno" keys' }]
     end
   end
 end

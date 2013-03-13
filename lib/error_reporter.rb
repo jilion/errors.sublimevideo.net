@@ -6,7 +6,7 @@ class ErrorReporter
   end
 
   def valid_error?
-    params.has_key? 'message'
+    params.has_key?('message') || (params.keys & %w[file lineno]).size == 2
   end
 
   def report
